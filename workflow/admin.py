@@ -5,6 +5,7 @@ from import_export import resources, fields
 from import_export.admin import ImportExportModelAdmin, ExportMixin
 from import_export.widgets import ForeignKeyWidget
 from simple_history.admin import SimpleHistoryAdmin
+from django_json_widget.widgets import JSONEditorWidget
 
 from .models import (Country, Documentation, WorkflowLevel2,
                      Organization, AdminLevelOne, Office, AdminLevelTwo,
@@ -16,7 +17,8 @@ from .models import (Country, Documentation, WorkflowLevel2,
                      FormGuidance, TolaUserProxy, TolaBookmarks, Currency,
                      ApprovalWorkflow, ApprovalType, FundCode, RiskRegister,
                      IssueRegister, CodedField, WorkflowModules, Milestone,
-                     Portfolio, SectorRelated, WorkflowLevel1Sector)
+                     Portfolio, SectorRelated, WorkflowLevel1Sector,
+                     Internationalization)
 
 
 # Resource for CSV export
@@ -160,6 +162,14 @@ class OrganizationAdmin(admin.ModelAdmin):
 class MilestoneAdmin(admin.ModelAdmin):
     list_display = ('name', 'create_date', 'edit_date')
     display = 'Milestone'
+
+
+class InternationalizationAdmin(admin.ModelAdmin):
+    list_display = ('language', )
+    display = 'Internationalization'
+    formfield_overrides = {
+        fields.JSONField: {'widget': JSONEditorWidget},
+    }
 
 
 class TolaBookmarksAdmin(admin.ModelAdmin):
@@ -316,3 +326,4 @@ admin.site.register(Milestone, MilestoneAdmin)
 admin.site.register(Portfolio, PortfolioAdmin)
 admin.site.register(SectorRelated, SectorRelatedAdmin)
 admin.site.register(WorkflowLevel1Sector, WorkflowLevel1SectorAdmin)
+admin.site.register(Internationalization, InternationalizationAdmin)
