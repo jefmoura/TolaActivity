@@ -49,6 +49,7 @@ def search(request, index, term):
             index = prefix + index
 
         b = {
+            "from": 0, "size": 1000,
             "query": {
                 "bool": {
                     "should": [
